@@ -1,4 +1,4 @@
-Django==3.0
+Django==3.2.25
 gunicorn
 psycopg2-binary
 celery
