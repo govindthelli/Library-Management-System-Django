@@ -1,28 +1,39 @@
 {% extends 'html/base.html' %}
-{% load static %}
 {% block title %}Register{% endblock %}
 {% block content %}
 <br><br><br>
-<h3>Register</h3>
+
 <div class="container mt-4">
-	<div class="card col-md-4 mx-auto shadow-lg border border-success">
-		<div class="card-body">
-			<h4>Register</h4>
-			<form method="post">
-				{% csrf_token %}
-				{% for i in t %}
-					{{i}}
-				{% endfor %}
-				<div class="row">
-					<div class="col">
-						<a href="{% url 'lgo' %}" class="btn btn-warning form-control">Existing User?</a>
-					</div>
-					<div class="col">
-						<input type="submit" value="Subscribe" class="btn btn-success form-control">
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+  <div class="card col-md-4 mx-auto shadow-lg border border-success">
+    <div class="card-body">
+      <h4>Register</h4>
+
+      <form method="post">
+        {% csrf_token %}
+
+        {{ t.non_field_errors }}
+
+        {% for field in t %}
+          <div class="mb-2">
+            {{ field }}
+            <div class="text-danger">{{ field.errors }}</div>
+          </div>
+        {% endfor %}
+
+        <div class="row">
+          <div class="col">
+            <a href="{% url 'lgo' %}" class="btn btn-warning form-control">
+              Existing User?
+            </a>
+          </div>
+          <div class="col">
+            <input type="submit" value="Subscribe"
+                   class="btn btn-success form-control">
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
 </div>
 {% endblock %}
