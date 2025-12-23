@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ================================
 # SECURITY (PRODUCTION)
 # ================================
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = 0ge+dyjebvg&53t-x@)qlrxxc+((2s+2a#k3jil@rsah7g+4x&
 DEBUG = False
 ALLOWED_HOSTS = ["*"]   # replace with domain/IP after deployment
 
