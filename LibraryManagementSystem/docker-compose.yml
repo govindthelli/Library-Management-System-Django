@@ -7,8 +7,10 @@ services:
       POSTGRES_DB: librarydb
       POSTGRES_USER: libraryuser
       POSTGRES_PASSWORD: librarypass
-      TZ: UTC                     # ✅ REQUIRED (fixes UTC assertion)
+      TZ: UTC
       PGTZ: UTC
+    command: >
+      postgres -c timezone=UTC
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
