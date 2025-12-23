@@ -30,7 +30,6 @@ services:
       POSTGRES_PASSWORD: librarypass
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
 volumes:
   postgres_data:
   staticfiles:
