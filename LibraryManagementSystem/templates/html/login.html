@@ -1,26 +1,43 @@
 {% extends 'html/base.html' %}
-{% load static %}
 {% block title %}Login{% endblock %}
 {% block content %}
 <br><br><br>
+
 <div class="container mt-4">
-	<div class="card col-md-4 mx-auto shadow-lg border border-success">
-		<div class="card-body">
-			<h4>Login</h4>
-			<form method="post">
-				{% csrf_token %}
-				<input type="text" name="username" placeholder="Username" class="form-control my-2">
-				<input type="password" name="password" placeholder="Password" class="form-control my-2">			
-				<div class="row">
-					<div class="col">
-						<a href="{% url 'reg' %}" class="btn btn-primary form-control">New User</a>
-					</div>
-					<div class="col">
-						<input type="submit" value="Login" class="btn btn-success form-control">
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
+  <div class="card col-md-4 mx-auto shadow-lg border border-success">
+    <div class="card-body">
+      <h4>Login</h4>
+
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          Invalid username or password
+        </div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="username"
+               placeholder="Username"
+               class="form-control my-2">
+
+        <input type="password" name="password"
+               placeholder="Password"
+               class="form-control my-2">
+
+        <div class="row">
+          <div class="col">
+            <a href="{% url 'reg' %}" class="btn btn-primary form-control">
+              New User
+            </a>
+          </div>
+          <div class="col">
+            <input type="submit" value="Login"
+                   class="btn btn-success form-control">
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
 </div>
 {% endblock %}
