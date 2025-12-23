@@ -11,6 +11,8 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 from django.db.models import Q
 from django.db.models import F
+from django.shortcuts import render, redirect
+from .forms import UsrForm
 # Create your views here.
 
 def home(request):
@@ -26,18 +28,20 @@ def about(request):
 def contact(request):
     return render(request,'html/contact.html')
 
+from django.shortcuts import render, redirect
+from .forms import UsrForm
+
 def register(request):
     if request.method == "POST":
-        g = UsrForm(request.POST)
-        if g.is_valid():
-            user = g.save(commit=False)
-            user.set_password(g.cleaned_data['password'])
-            user.save()
-            return redirect('/lgo')
+        form = UsrForm(request.POST)
+        if form.is_valid():
+            form.save()          # ✅ DO NOT use set_password manually
+            return redirect('lgo')
     else:
-        g = UsrForm()
+        form = UsrForm()
 
-    return render(request,'html/register.html',{'t':g})
+    return render(request, 'html/register.html', {'t': form})
+
 
 def profile(request):
     w = User.objects.get(id=request.user.id)
