@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ================================
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
-ALLOWED_HOSTS = ["*"]   # replace with domain/IP after deployment
+ALLOWED_HOSTS = ["*"]   # replace with domain/IP in real production
 
 # ================================
 # APPLICATIONS
@@ -72,7 +72,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'LibraryManagementSystem.wsgi.application'
 
 # ================================
-# DATABASE (POSTGRESQL – DOCKER / SERVER)
+# DATABASE (POSTGRESQL – FIXED UTC ISSUE)
 # ================================
 DATABASES = {
     'default': {
@@ -82,6 +82,9 @@ DATABASES = {
         'PASSWORD': os.getenv("DB_PASSWORD"),
         'HOST': os.getenv("DB_HOST"),
         'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c timezone=UTC',
+        },
     }
 }
 
@@ -105,12 +108,10 @@ USE_L10N = True
 USE_TZ = True
 
 # ================================
-# STATIC & MEDIA FILES (PRODUCTION)
+# STATIC & MEDIA FILES (FIXED)
 # ================================
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# ✅ ONLY CHANGE (ADDED THIS LINE)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
@@ -124,7 +125,7 @@ LOGIN_URL = 'lgo'
 LOGIN_REDIRECT_URL = 'hm'
 
 # ================================
-# EMAIL CONFIG (SECURE)
+# EMAIL CONFIG
 # ================================
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
