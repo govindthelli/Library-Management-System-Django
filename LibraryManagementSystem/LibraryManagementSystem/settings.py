@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ================================
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
-ALLOWED_HOSTS = ["*"]  # change to domain/IP in production
+ALLOWED_HOSTS = ["*"]
 
 # ================================
 # APPLICATIONS
@@ -70,7 +70,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'LibraryManagementSystem.wsgi.application'
 
 # ================================
-# DATABASE (POSTGRESQL – UTC FIXED)
+# DATABASE (POSTGRESQL – UTC)
 # ================================
 DATABASES = {
     'default': {
@@ -97,13 +97,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # ================================
-# INTERNATIONALIZATION (CORRECT)
+# INTERNATIONALIZATION
 # ================================
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Kolkata'   # UI timezone
+TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True               # DB always UTC
+USE_TZ = True
 
 # ================================
 # STATIC & MEDIA FILES
@@ -135,3 +135,16 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 # DEFAULT PRIMARY KEY
 # ================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# =====================================================
+# 🔴 CRITICAL FIX: FORCE POSTGRES SESSION TIMEZONE = UTC
+# =====================================================
+from django.db.backends.postgresql.base import DatabaseWrapper
+
+def _cursor(self, *args, **kwargs):
+    cursor = super(DatabaseWrapper, self)._cursor(*args, **kwargs)
+    cursor.execute("SET TIME ZONE 'UTC';")
+    return cursor
+
+DatabaseWrapper._cursor = _cursor
