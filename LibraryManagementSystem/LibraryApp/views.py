@@ -30,10 +30,13 @@ def register(request):
     if request.method == "POST":
         g = UsrForm(request.POST)
         if g.is_valid():
-            g.save()
+            user = g.save(commit=False)
+            user.set_password(g.cleaned_data['password'])
+            user.save()
             return redirect('/lgo')
-    
-    g = UsrForm()   
+    else:
+        g = UsrForm()
+
     return render(request,'html/register.html',{'t':g})
 
 def profile(request):
